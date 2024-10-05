@@ -27,7 +27,12 @@ namespace homework_8.Controllers
         [HttpPost]
         public IActionResult Create(Car car)
         {
+
             if (car == null) { return BadRequest(); }
+            if (car.Model.Length<=1)
+            {
+                ModelState.AddModelError("All", "Field cannot be empty");
+            }
             if (ModelState.IsValid) { _context.Add(car); _context.SaveChanges(); }
             else { return View(car); }
 
