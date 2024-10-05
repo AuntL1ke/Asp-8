@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using homework_8.Data;
-using homework_8.Models;
+using DataAccess.Data;
+using DataAccess.Models;
 
 namespace homework_8.Controllers
 {

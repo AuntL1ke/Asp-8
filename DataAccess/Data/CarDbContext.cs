@@ -1,7 +1,7 @@
-﻿using homework_8.Models;
+﻿using DataAccess.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace homework_8.Data
+namespace DataAccess.Data
 {
     public class CarDbContext:DbContext
     {

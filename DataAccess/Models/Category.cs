@@ -1,4 +1,4 @@
-﻿namespace homework_8.Models
+﻿namespace DataAccess.Models
 {
     public class Category
     {
