@@ -3,16 +3,19 @@
 using DataAccess.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using homework_8.Validators;
 
 namespace homework_8.Controllers
 {
     public class CarsController : Controller
     {
         private readonly CarDbContext _context;
-        public CarsController(CarDbContext context) 
+        private readonly CarValidator _validator;
+        public CarsController(CarDbContext context, CarValidator validator) 
         { 
         
             _context = context;
+            _validator = validator;
         }
         public IActionResult Index()
         {
@@ -33,7 +36,8 @@ namespace homework_8.Controllers
             {
                 ModelState.AddModelError("All", "Field cannot be empty");
             }
-            if (ModelState.IsValid) { _context.Add(car); _context.SaveChanges(); }
+            var result = _validator.Validate(car);
+            if (ModelState.IsValid&&result.IsValid) { _context.Add(car); _context.SaveChanges(); }
             else { return View(car); }
 
             return RedirectToAction("Index");
