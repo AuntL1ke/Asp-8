@@ -3,6 +3,8 @@ using FluentValidation.AspNetCore;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using homework_8.Services;
+using DataAccess.Models;
+using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,6 +22,8 @@ builder.Services.AddSession(options =>
     options.Cookie.HttpOnly = true;
     options.Cookie.IsEssential = true;
 });
+builder.Services.AddDefaultIdentity<User>(options=>options.SignIn.RequireConfirmedAccount=true)
+    .AddEntityFrameworkStores<CarDbContext>();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<SessionData>();
 var app = builder.Build();
@@ -39,7 +43,7 @@ app.UseRouting();
 
 app.UseAuthorization();
 app.UseSession();
-
+app.MapRazorPages();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
