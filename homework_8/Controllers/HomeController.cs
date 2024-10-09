@@ -2,6 +2,7 @@ using DataAccess.Data;
 using DataAccess.Models;
 using homework_8.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 
 namespace homework_8.Controllers
@@ -17,7 +18,7 @@ namespace homework_8.Controllers
 
         public IActionResult Index()
         {
-            List<Car> cars = _context.Cars.ToList();
+            List<Car> cars = _context.Cars.Include(car=>car.Category).ToList();
             return View(cars);
         }
 

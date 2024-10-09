@@ -1,0 +1,68 @@
+﻿@using homework_8.Extensions;
+@{
+    Dictionary<int, int> idsAndQuantities = Context.Session.GetObject<Dictionary<int, int>>("cart");
+}
+@model List<Car>
+@if (Model != null)
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Model
+                </th>
+                <th>
+                    Color
+                </th>
+                <th>
+                    Year
+                </th>
+
+                <th>
+                    Category
+                </th>
+                <th>
+                    Actions
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @item.Model
+                    </td>
+                    <td>
+                        @item.Color
+                    </td>
+                    <td>
+                        @item.Year
+                    </td>
+                    <td>
+                        @item.Category.Name
+                    </td>
+                    <td>
+                        <div class="container d-flex">
+                            <div class="btn-group">
+                                <a class="btn btn-primary" asp-controller="Cart" asp-action="MinusProductQuantity" asp-route-id="@item.Id">-</a>
+
+                                <span class="btn btn-light disabled">@idsAndQuantities[item.Id]</span>
+
+                                <a class="btn btn-primary" asp-controller="Cart" asp-action="PlusProductQuantity" asp-route-id="@item.Id">+</a>
+                            </div>
+
+                            <a class="btn btn-white m-1" asp-controller="Cart" asp-action="Remove" asp-route-id="@item.Id"><i class="fa-solid fa-trash text-danger"></i></a>
+                        </div>
+                    </td>
+                   
+                </tr>
+            }
+        </tbody>
+    </table>
+
+}
+else{
+    <h3>Cart is empty</h3>
+}
+
