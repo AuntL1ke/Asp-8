@@ -4,11 +4,14 @@ using DataAccess.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using homework_8.Validators;
+using Microsoft.AspNetCore.Authorization;
 
 namespace homework_8.Controllers
 {
+    [Authorize(Roles ="Admin")]
     public class CarsController : Controller
     {
+
         private readonly CarDbContext _context;
         private readonly CarValidator _validator;
         public CarsController(CarDbContext context, CarValidator validator) 

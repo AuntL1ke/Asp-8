@@ -7,9 +7,12 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using DataAccess.Data;
 using DataAccess.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace homework_8.Controllers
 {
+    [Authorize(Roles = "Admin")]
+
     public class CategoriesController : Controller
     {
         private readonly CarDbContext _context;

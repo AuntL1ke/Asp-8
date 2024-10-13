@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using homework_8.Services;
 using DataAccess.Models;
 using Microsoft.AspNetCore.Identity;
+using homework_8.Helper;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,10 +24,22 @@ builder.Services.AddSession(options =>
     options.Cookie.IsEssential = true;
 });
 builder.Services.AddDefaultIdentity<User>(options=>options.SignIn.RequireConfirmedAccount=true)
+    .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<CarDbContext>();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<SessionData>();
+
+
+
 var app = builder.Build();
+
+
+using (var scope = app.Services.CreateScope())
+{
+    IServiceProvider serviceProvider = scope.ServiceProvider;
+    Seeder.SeedRoles(serviceProvider).Wait();
+    Seeder.SeedAdmin(serviceProvider).Wait();
+}
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
