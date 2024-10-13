@@ -9,5 +9,7 @@ namespace DataAccess.Models
 {
     public class User:IdentityUser
     {
+        public DateTime BirthDay { get; set; }
+        public ICollection<Order> Orders { get; set; }
     }
 }
