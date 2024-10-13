@@ -3,26 +3,31 @@
 using DataAccess.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using homework_8.Validators;
+using BusinessLogic.Validators;
 using Microsoft.AspNetCore.Authorization;
+using BusinessLogic.DTOs;
+using BusinessLogic.Services;
+using FluentValidation;
+using AutoMapper;
 
 namespace homework_8.Controllers
 {
     [Authorize(Roles ="Admin")]
     public class CarsController : Controller
     {
-
-        private readonly CarDbContext _context;
+        private readonly IMapper _mapper;
+        private readonly CarService _carService;
         private readonly CarValidator _validator;
-        public CarsController(CarDbContext context, CarValidator validator) 
+        public CarsController(CarService carService, CarValidator validator, IMapper mapper) 
         { 
         
-            _context = context;
+            _carService = carService;
             _validator = validator;
+            _mapper = mapper;
         }
         public IActionResult Index()
         {
-            List<Car> cars = _context.Cars.Include(car=>car.Category).ToList();
+            List<CarDto> cars = _carService.GetAll();
             return View(cars);
         }
         public IActionResult Create() 
@@ -31,48 +36,48 @@ namespace homework_8.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult Create(Car car)
+        public IActionResult Create(CarDto carDto)
         {
-
+            Car car = _mapper.Map<Car>(carDto);
             if (car == null) { return BadRequest(); }
             if (car.Model.Length<=1)
             {
                 ModelState.AddModelError("All", "Field cannot be empty");
             }
             var result = _validator.Validate(car);
-            if (ModelState.IsValid&&result.IsValid) { _context.Add(car); _context.SaveChanges(); }
+            if (ModelState.IsValid&&result.IsValid) { _carService.Add(carDto);  }
             else { return View(car); }
 
             return RedirectToAction("Index");
         }
         public IActionResult Edit(int id)
         {
-            Car car = _context.Cars.FirstOrDefault(c => c.Id == id)!;
+            CarDto car = _carService.GetById(id);
             return View(car);
         }
         [HttpPost]
-        public IActionResult Edit(Car car)
+        public IActionResult Edit(CarDto carDto)
         {
-            if (car == null) { return BadRequest(); }
-            if (ModelState.IsValid) { _context.Update(car); _context.SaveChanges(); }
-            else { return View(car); }
+            
+            if (carDto == null) { return BadRequest(); }
+            if (ModelState.IsValid) { _carService.Update(carDto); }
+            else { return View(carDto); }
 
             return RedirectToAction("Index");
         }
 
         public IActionResult Details(int id)
         {
-            Car car = _context.Cars.FirstOrDefault(c=>c.Id == id);
+            CarDto car = _carService.GetById(id);
             return View(car);
         }
 
         public IActionResult Remove(int id)
         {
-            Car car = _context.Cars.FirstOrDefault(c => c.Id == id);
-
-            _context.Cars.Remove(car);
-            _context.SaveChanges();
+      
+            _carService.Delete(id);
             return RedirectToAction("Index");
+
 
 
         }

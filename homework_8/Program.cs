@@ -2,7 +2,7 @@ using DataAccess.Data;
 using FluentValidation.AspNetCore;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
-using homework_8.Services;
+using BusinessLogic.Services;
 using DataAccess.Models;
 using Microsoft.AspNetCore.Identity;
 using homework_8.Helper;

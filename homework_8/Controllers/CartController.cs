@@ -1,7 +1,7 @@
 ﻿using DataAccess.Data;
 using DataAccess.Models;
-using homework_8.Extensions;
-using homework_8.Services;
+using BusinessLogic.Extensions;
+using BusinessLogic.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;

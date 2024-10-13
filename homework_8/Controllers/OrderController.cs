@@ -1,7 +1,7 @@
 ﻿using DataAccess.Data;
 using DataAccess.Models;
 using homework_8.Models;
-using homework_8.Services;
+using BusinessLogic.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;

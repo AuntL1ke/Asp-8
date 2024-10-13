@@ -1,7 +1,7 @@
 ﻿using DataAccess.Models;
 using FluentValidation;
 
-namespace homework_8.Validators
+namespace BusinessLogic.Validators
 {
     public class CarValidator:AbstractValidator<Car>
     {

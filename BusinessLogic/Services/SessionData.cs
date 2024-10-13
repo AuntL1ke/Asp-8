@@ -1,6 +1,7 @@
-﻿using homework_8.Extensions;
+﻿using BusinessLogic.Extensions;
+using Microsoft.AspNetCore.Http;
 
-namespace homework_8.Services
+namespace BusinessLogic.Services
 {
     public class SessionData
     {

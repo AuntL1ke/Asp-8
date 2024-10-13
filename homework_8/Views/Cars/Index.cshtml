@@ -1,5 +1,5 @@
 ﻿@using Microsoft.AspNetCore.Identity
-@model IEnumerable<DataAccess.Models.Car>
+@model IEnumerable<CarDto>
 
 @{
     ViewData["Title"] = "Index";
@@ -28,7 +28,7 @@
             </th>
             
             <th>
-                @Html.DisplayNameFor(Model=>Model.Category.Name)
+                @Html.DisplayNameFor(Model=>Model.CategoryName)
             </th>
             <th>
                 Actions
@@ -48,7 +48,7 @@
                 @Html.DisplayFor(modelItem => item.Year)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Category.Name)
+                @Html.DisplayFor(modelItem => item.CategoryName)
             </td>
             <td>
                     @if (signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
@@ -57,7 +57,7 @@
                         <a asp-action="Remove" asp-route-id="@item.Id">Delete</a>
                         
                     }
-                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> 
+                     <a asp-action="Details" asp-route-id="@item.Id">Details</a> 
 
             </td>
         </tr>
