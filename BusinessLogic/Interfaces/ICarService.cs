@@ -11,7 +11,7 @@ namespace BusinessLogic.Interfaces
     {
         void Add(CarDto carDto);
         void Update(CarDto carDto);
-        void Delete(int id);
+        void Delete(CarDto carDto);
         CarDto GetById(int id);
         List<CarDto> GetAll();
     }

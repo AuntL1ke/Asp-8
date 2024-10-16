@@ -33,9 +33,15 @@
                 <input asp-for="CategoryId" class="form-control" />
                 <span asp-validation-for="CategoryId" class="text-danger"></span>
             </div>
+            <input asp-for="ImagePath" hidden />
+            <div class="col-6">
+                <label asp-for="Image" class="form-label">Image</label>
+                <input asp-for="Image" class="form-control" type="file" id="formFile">
+            </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
+
         </form>
     </div>
 </div>

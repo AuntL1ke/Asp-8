@@ -6,13 +6,20 @@ using BusinessLogic.Services;
 using DataAccess.Models;
 using Microsoft.AspNetCore.Identity;
 using homework_8.Helper;
+using BusinessLogic.Interfaces;
+using BusinessLogic.Helpers;
+using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-builder.Services.AddDbContext<CarDbContext>(options=>options.UseSqlServer(builder.Configuration.GetConnectionString("CarDbContext")));
-builder.Services.AddFluentValidationAutoValidation();
+builder.Services.AddDbContext<CarDbContext>(
+    options =>
+    {
+        options.UseSqlServer(builder.Configuration.GetConnectionString("CarDbContext"));
+        options.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
+    }); builder.Services.AddFluentValidationAutoValidation();
 builder.Services.AddValidatorsFromAssemblies(AppDomain.CurrentDomain.GetAssemblies());
 
 builder.Services.AddDistributedMemoryCache();
@@ -27,9 +34,10 @@ builder.Services.AddDefaultIdentity<User>(options=>options.SignIn.RequireConfirm
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<CarDbContext>();
 builder.Services.AddHttpContextAccessor();
+builder.Services.AddScoped<CarService>();
 builder.Services.AddScoped<SessionData>();
-
-
+builder.Services.AddScoped<IFileService,FileService>();
+builder.Services.AddAutoMapper(typeof(MapperProfile));
 
 var app = builder.Build();
 

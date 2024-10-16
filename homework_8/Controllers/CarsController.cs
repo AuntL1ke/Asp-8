@@ -74,8 +74,8 @@ namespace homework_8.Controllers
 
         public IActionResult Remove(int id)
         {
-      
-            _carService.Delete(id);
+            CarDto car = _carService.GetById(id);
+            _carService.Delete(car);
             return RedirectToAction("Index");
 
 

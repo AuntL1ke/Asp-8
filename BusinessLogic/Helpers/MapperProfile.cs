@@ -14,8 +14,9 @@ namespace BusinessLogic.Helpers
         public MapperProfile()
         {
             CreateMap<Car, CarDto>()
-                .ForMember(carDto=>carDto.CategoryName,option=>option.MapFrom(car=>car.Category!.Name));
-            CreateMap<Car, CarDto>();
+            .ForMember(carDto => carDto.CategoryName, opt => opt.MapFrom(car => car.Category!.Name));
+
+             CreateMap<CarDto, Car>();
         }
     }
 }

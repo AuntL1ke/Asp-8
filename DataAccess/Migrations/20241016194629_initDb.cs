@@ -60,8 +60,8 @@ namespace DataAccess.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -175,7 +175,7 @@ namespace DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Order",
+                name: "Orders",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -187,9 +187,9 @@ namespace DataAccess.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Order", x => x.Id);
+                    table.PrimaryKey("PK_Orders", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Order_AspNetUsers_UserId",
+                        name: "FK_Orders_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
@@ -205,6 +205,7 @@ namespace DataAccess.Migrations
                     Model = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Color = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Year = table.Column<short>(type: "smallint", nullable: false),
+                    ImagePath = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CategoryId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -232,29 +233,29 @@ namespace DataAccess.Migrations
 
             migrationBuilder.InsertData(
                 table: "Cars",
-                columns: new[] { "Id", "CategoryId", "Color", "Model", "Year" },
+                columns: new[] { "Id", "CategoryId", "Color", "ImagePath", "Model", "Year" },
                 values: new object[,]
                 {
-                    { 1, 1, "White", "Ford Mondeo", (short)2008 },
-                    { 2, 3, "Black", "BMW 3 Series", (short)2015 },
-                    { 3, 1, "Silver", "Mercedes-Benz C-Class", (short)2017 },
-                    { 4, 2, "Gray", "Audi Q7", (short)2020 },
-                    { 5, 4, "Blue", "Volkswagen Golf", (short)2019 },
-                    { 6, 1, "Red", "Tesla Model 3", (short)2022 },
-                    { 7, 2, "Green", "Toyota RAV4", (short)2021 },
-                    { 8, 5, "White", "Mazda MX-5", (short)2016 },
-                    { 9, 3, "Yellow", "Chevrolet Camaro", (short)2018 },
-                    { 10, 2, "Black", "Ford Explorer", (short)2020 },
-                    { 11, 4, "Orange", "Nissan Juke", (short)2015 },
-                    { 12, 5, "Red", "Porsche 911", (short)2021 },
-                    { 13, 1, "Silver", "Hyundai Elantra", (short)2019 },
-                    { 14, 2, "Blue", "Subaru Outback", (short)2018 },
-                    { 15, 4, "Green", "Mini Cooper", (short)2017 },
-                    { 16, 3, "Black", "Dodge Challenger", (short)2020 },
-                    { 17, 5, "White", "Jaguar F-Type", (short)2022 },
-                    { 18, 1, "Gray", "Honda Accord", (short)2016 },
-                    { 19, 2, "Blue", "Lexus RX", (short)2021 },
-                    { 20, 4, "Yellow", "Volkswagen Beetle", (short)2019 }
+                    { 1, 1, "White", null, "Ford Mondeo", (short)2008 },
+                    { 2, 3, "Black", null, "BMW 3 Series", (short)2015 },
+                    { 3, 1, "Silver", null, "Mercedes-Benz C-Class", (short)2017 },
+                    { 4, 2, "Gray", null, "Audi Q7", (short)2020 },
+                    { 5, 4, "Blue", null, "Volkswagen Golf", (short)2019 },
+                    { 6, 1, "Red", null, "Tesla Model 3", (short)2022 },
+                    { 7, 2, "Green", null, "Toyota RAV4", (short)2021 },
+                    { 8, 5, "White", null, "Mazda MX-5", (short)2016 },
+                    { 9, 3, "Yellow", null, "Chevrolet Camaro", (short)2018 },
+                    { 10, 2, "Black", null, "Ford Explorer", (short)2020 },
+                    { 11, 4, "Orange", null, "Nissan Juke", (short)2015 },
+                    { 12, 5, "Red", null, "Porsche 911", (short)2021 },
+                    { 13, 1, "Silver", null, "Hyundai Elantra", (short)2019 },
+                    { 14, 2, "Blue", null, "Subaru Outback", (short)2018 },
+                    { 15, 4, "Green", null, "Mini Cooper", (short)2017 },
+                    { 16, 3, "Black", null, "Dodge Challenger", (short)2020 },
+                    { 17, 5, "White", null, "Jaguar F-Type", (short)2022 },
+                    { 18, 1, "Gray", null, "Honda Accord", (short)2016 },
+                    { 19, 2, "Blue", null, "Lexus RX", (short)2021 },
+                    { 20, 4, "Yellow", null, "Volkswagen Beetle", (short)2019 }
                 });
 
             migrationBuilder.CreateIndex(
@@ -302,8 +303,8 @@ namespace DataAccess.Migrations
                 column: "CategoryId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Order_UserId",
-                table: "Order",
+                name: "IX_Orders_UserId",
+                table: "Orders",
                 column: "UserId");
         }
 
@@ -329,7 +330,7 @@ namespace DataAccess.Migrations
                 name: "Cars");
 
             migrationBuilder.DropTable(
-                name: "Order");
+                name: "Orders");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

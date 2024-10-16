@@ -11,7 +11,7 @@
 <div class="row">
     <div class="col-md-4">
         
-        <form asp-action="Create">
+        <form asp-action="Create" enctype="multipart/form-data">
             <div asp-validation-summary="All" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Model" class="control-label"></label>
@@ -33,6 +33,12 @@
                 <input asp-for="CategoryId" class="form-control" />
                 <span asp-validation-for="CategoryId" class="text-danger"></span>
             </div>
+            <input asp-for="ImagePath" hidden />
+            <div class="col-6">
+                <label asp-for="Image" class="form-label">Image</label>
+                <input asp-for="Image" class="form-control" type="file" id="formFile">
+            </div>
+
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
