@@ -38,7 +38,8 @@ builder.Services.AddScoped<CarService>();
 builder.Services.AddScoped<SessionData>();
 builder.Services.AddScoped<IFileService,FileService>();
 builder.Services.AddAutoMapper(typeof(MapperProfile));
-
+builder.Services.AddScoped<IMailService, MailService>();
+    
 var app = builder.Build();
 
 

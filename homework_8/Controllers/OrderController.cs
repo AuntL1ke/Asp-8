@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
+using BusinessLogic.Interfaces;
 
 namespace homework_8.Controllers
 {
@@ -13,11 +14,14 @@ namespace homework_8.Controllers
     public class OrderController : Controller
     {
         private readonly CarDbContext _context;
+        private readonly IMailService _mailService;
+
         private readonly SessionData _sessionData;
-        public OrderController(CarDbContext context, SessionData sessionData)
+        public OrderController(CarDbContext context, SessionData sessionData, IMailService mailService)
         {
             _context = context;
             _sessionData = sessionData;
+            _mailService = mailService;
         }
         public IActionResult Index()
         {
@@ -43,7 +47,7 @@ namespace homework_8.Controllers
                 Cars = selectedCars
             };
         }
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
             string? userId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
             Order order = CreateOrder();
@@ -51,6 +55,15 @@ namespace homework_8.Controllers
        
             HttpContext.Session.Clear();
             _context.AddOrder(order);
+            string? userName = HttpContext.User.FindFirstValue(ClaimTypes.Name);
+            var orders = _context.Orders.Where(o => o.UserId == userId).ToList(); ;
+            string text = "";
+            foreach (var item in orders)
+            {
+                text += $"<p>{item.Id} {item.OrderDate} {item.TotalPrice}</p>";
+            }
+         
+            await _mailService.SendMailAsync("Your Order", text, userName!);
 
             return RedirectToAction("Index");
         }
