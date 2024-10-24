@@ -1,0 +1,6 @@
+@HomewoirkWebAPI_HostAddress = http://localhost:5279
+
+GET {{HomewoirkWebAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

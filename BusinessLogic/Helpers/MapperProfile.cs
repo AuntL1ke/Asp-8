@@ -17,6 +17,7 @@ namespace BusinessLogic.Helpers
             .ForMember(carDto => carDto.CategoryName, opt => opt.MapFrom(car => car.Category!.Name));
 
              CreateMap<CarDto, Car>();
+            CreateMap<CarDto, CarDtoApi>().ReverseMap();
         }
     }
 }
